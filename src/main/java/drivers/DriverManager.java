@@ -2,6 +2,7 @@ package drivers;
 
 import io.restassured.RestAssured;
 import io.restassured.internal.RestAssuredResponseImpl;
+import lombok.Generated;
 import org.example.cucumber.Log;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
@@ -126,6 +127,16 @@ Log.info("getHubUrl - Status Code is "+response.getStatusCode());
         }
         return url;
     }
+
+    @Generated
+    public String getAdditionalChromeHeadlessArguments(){
+        return  this.additionalChromeHeadlessArguments;
+    }
+    @Generated
+    public String setAdditionalChromeHeadlessArguments(String additionalChromeHeadlessArguments){
+        return  this.additionalChromeHeadlessArguments=additionalChromeHeadlessArguments;
+    }
+
     static {
         BROWSERSTACK_MODE_VALUE=BROWSERSTACK_MODE!=null &&(!BROWSERSTACK_MODE.isEmpty()||!BROWSERSTACK_MODE.isBlank());
     }

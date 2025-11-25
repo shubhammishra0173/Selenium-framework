@@ -10,10 +10,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.cucumber.Log;
 import org.openqa.selenium.OutputType;
 
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 import javax.imageio.ImageIO;
 import javax.print.attribute.standard.PrinterMakeAndModel;
@@ -78,6 +80,37 @@ public class Screenshots {
             }
         }
 
+    }
+    public static void addStepWithScreenshotInReport(boolean status, WebDriver driver , String message){
+        ExtentTest extentTest = ExtentTestManager.getTest();
+        try{
+            if(extentTest!=null){
+                if(driver!=null){
+                    String path = captureScreenshot(driver,"secreenshot");
+                    if(status){
+                        extentTest.pass(message,MediaEntityBuilder.createScreenCaptureFromPath(path).build());
+
+                    }else{
+                        extentTest.fail(message,MediaEntityBuilder.createScreenCaptureFromPath(path).build());
+                        Assert.assertTrue(status,message);
+                    }
+                }else if(status){
+                    extentTest.pass(message);
+
+                }else {
+                    extentTest.fail(message);
+                    Assert.assertTrue(status,message);
+                }
+            }
+        }catch (Exception e){
+            logger.warn(e.getMessage());
+        }finally {
+            if(status){
+                Log.info("Test passed - "+message);
+            }else{
+                Log.info("Test Failed -- "+ message);
+            }
+        }
     }
     public static void addStepInReport(String message){
         ExtentTest extentTest = ExtentTestManager.getTest();

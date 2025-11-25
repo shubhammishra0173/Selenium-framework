@@ -20,7 +20,7 @@ public class amazon_commonPage extends CommonActionsForXpath {
         super(driver);
         this.driver=driver;
     }
-    public boolean amazonLogin(String URL, String userName,String password){
+    public boolean amazonLogin(String URL, String userName,String password,boolean continueWithstandard){
         boolean loggedIn=false;
         try{
             if(URL!=null){
